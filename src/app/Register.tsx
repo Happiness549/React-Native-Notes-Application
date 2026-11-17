@@ -2,49 +2,29 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Text, StyleSheet, TextInput,ScrollView, Pressable, View, KeyboardAvoidingView, StatusBar } from 'react-native'
 import { useState, useEffect } from 'react'
 import { useRouter } from "expo-router";
+import CustomInput from '@/components/CustomInput';
 
 export default function Register (){
      const router = useRouter();
 
-    const [firstName, setFirstName] = useState('');
+    const [name, setName] = useState<string>('');
+    const [surname, setSurname] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
 
     useEffect(() =>{
         
     }, [])
+
     return(
     <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView behavior='padding'>
              <ScrollView contentContainerStyle={styles.scrollView}>
                 <Text style={styles.formTitle}>Registration Form</Text>
-                <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Full Name</Text>
-                    <TextInput 
-                    placeholder='Full name' 
-                    style={styles.input}
-                    onChangeText={(text) =>{setFirstName}}/>
-                </View>
-
-                <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Surname</Text>
-                    <TextInput 
-                    placeholder='Surname' 
-                    style={styles.input}/>
-                </View>
-                
-                
-                <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Email</Text>
-                    <TextInput 
-                    placeholder='Email' 
-                    style={styles.input}/>
-                </View>
-                
-                <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Password</Text>
-                    <TextInput 
-                    placeholder='Title' 
-                    style={styles.input}/>
-                </View>
+                <CustomInput name={'Name'} onChange={setName}/>
+                <CustomInput name={'Surname'} onChange={setSurname}/>
+                <CustomInput name={'Email'} onChange={setEmail}/>
+                <CustomInput name={'Password'} onChange={setPassword}/>
                 
                 
                 <Pressable style={styles.button}> 

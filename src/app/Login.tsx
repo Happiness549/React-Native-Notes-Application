@@ -2,12 +2,14 @@ import { useRouter } from "expo-router";
 import { Text, StyleSheet, TextInput,ScrollView, Pressable, View, KeyboardAvoidingView, StatusBar } from 'react-native'
 import { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import CustomInput from "@/components/CustomInput";
 
 
 export default function Login (){
     const router = useRouter();
 
-    const [firstName, setFirstName] = useState('');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
 
     useEffect(() =>{
         
@@ -18,19 +20,8 @@ export default function Login (){
              <ScrollView contentContainerStyle={styles.scrollView}>
                 <Text style={styles.formTitle}>Registration Form</Text> 
                 
-                <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Email</Text>
-                    <TextInput 
-                    placeholder='Email' 
-                    style={styles.input}/>
-                </View>
-                
-                <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Password</Text>
-                    <TextInput 
-                    placeholder='Title' 
-                    style={styles.input}/>
-                </View>
+                <CustomInput name={'Email'} onChange={setEmail}/>
+                <CustomInput name={'Password'} onChange={setPassword}/>
                 
                 
                 <Pressable style={styles.button}> 
