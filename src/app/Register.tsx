@@ -1,8 +1,10 @@
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Text, StyleSheet, TextInput,ScrollView, Pressable, View, KeyboardAvoidingView, StatusBar } from 'react-native'
 import { useState, useEffect } from 'react'
+import { useRouter } from "expo-router";
 
 export default function Register (){
+     const router = useRouter();
 
     const [firstName, setFirstName] = useState('');
 
@@ -49,10 +51,10 @@ export default function Register (){
                     <Text style={styles.buttonText}>Submit</Text>
                 </Pressable>
 
-                <View>
-                    <Text>Already have an account?</Text>
-                    <Text>Sign in</Text>
-                </View>
+                 <Pressable  onPress={() => router.push("/Login")} >
+                                   <Text style={styles.text}>Don't have an account? </Text>
+                                   <Text style={styles.texts}>Sign up</Text>  
+                              </Pressable>
                 <StatusBar/>
 
 
@@ -109,5 +111,15 @@ const styles = StyleSheet.create({
     color: '#BDBDBD',
     textAlign: 'center',
     textTransform: 'uppercase'
+  },
+   buttons: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  text: {
+    color: '#BDBDBD'
+  },
+  texts: {
+    color: '#306A6B'
   }
 });

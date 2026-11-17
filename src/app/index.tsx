@@ -1,10 +1,10 @@
 import { Text, View, StyleSheet } from "react-native";
-import Register from "./Register";
+import Login from "./Login";
 
 export default function Index() {
   return (
     <View style={styles.container}>
-      <Register/>
+      <Login/>
       
     </View>
   );
