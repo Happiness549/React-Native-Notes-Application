@@ -3,11 +3,8 @@ import { Text, StyleSheet, TextInput,ScrollView, Pressable, View, KeyboardAvoidi
 import { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomInput from "@/components/CustomInput";
+import { validateInput } from "../../utils/inputValidation";
 
-type ValidationResult = {
-    valid: boolean;
-    error: string | null;
-};
 
 
 export default function Login (){
@@ -33,28 +30,7 @@ export default function Login (){
         }));
     };
 
-    const validateInput = (type: string, value: string): ValidationResult => {
-        if (value.trim() === "") {
-            return {
-                valid: false,
-                error: "Input is required",
-            };
-        }
-
-    if (type === "email") {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
-            ? { valid: true, error: null }
-            : { valid: false, error: "Please insert a valid email" };
-    }
-
-    if (type === "string") {
-        return /^[A-Za-z]+$/.test(value)
-            ? { valid: true, error: null }
-            : { valid: false, error: "Only alphabets allowed" };
-    }
-
-        return { valid: true, error: null };
-    };
+    
     return(
     <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView behavior='padding'>

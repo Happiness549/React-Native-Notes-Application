@@ -3,20 +3,36 @@ import { Text, StyleSheet, TextInput,ScrollView, Pressable, View, KeyboardAvoidi
 import { useState, useEffect } from 'react'
 import { useRouter } from "expo-router";
 import CustomInput from '@/components/CustomInput';
+import { validateInput } from '../../utils/inputValidation';
+import { ValidationResult } from '../../utils/inputValidation';
+
+type Errors = {
+    firstName?: ValidationResult;
+    surname?: ValidationResult;
+    email?: ValidationResult;
+    password?: ValidationResult;
+};
 
 
 
 export default function Register (){
      const router = useRouter();
 
-    const [name, setName] = useState<string>('');
+    const [firstName, setFirstName] = useState<string>('');
     const [surname, setSurname] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    
+    const [errors, setErrors] = useState<Errors>({});
     useEffect(() =>{
         
     }, [])
+
+    const handleInput = (stateName: keyof Errors, type: string, value: string) => {
+    setErrors(prev => ({
+        ...prev,
+        [stateName]: validateInput(type, value)
+    }));
+};
 
  
     return(
@@ -24,17 +40,30 @@ export default function Register (){
         <KeyboardAvoidingView behavior='padding'>
              <ScrollView contentContainerStyle={styles.scrollView}>
                 <Text style={styles.formTitle}>Registration Form</Text>
-                <CustomInput name={'Name'} onChange={setName}/>
-                <CustomInput name={'Surname'} onChange={setSurname}/>
+                <CustomInput name={'Name'} 
+                onChange={setFirstName}
+                onBlur={() => handleInput('firstName', 'string', firstName)}
+                error={errors?.firstName?.error ?? ""}/>
+                
+                <CustomInput 
+                name={'Surname'} 
+                onChange={setSurname}
+                onBlur={() => handleInput('surname', 'string', surname)}
+                error={errors?.surname?.error ?? ""}
+                />
+
                 <CustomInput
                     name="Email"
-                    onChange={setEmail}
-                   
+                    onChange={setEmail} 
+                    onBlur={() => handleInput('email', 'string', email)}
+                    error={errors?.email?.error ?? ""}
                 />
+
                 <CustomInput
                     name="Password"
                     onChange={setPassword}
-                    
+                    onBlur={() => handleInput('password', 'password', password)}
+                    error={errors?.password?.error || errors?.password?.error }   
                 />
                 
                 

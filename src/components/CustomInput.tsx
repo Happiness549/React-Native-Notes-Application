@@ -4,11 +4,16 @@ import React from "react";
 type CustomInputProps = {
     onChange: (text: string) => void;
     name: string;
-    error?: string;
-    onBlur?: TextInputProps['onBlur'];
+    error?: string | string[] | null;
+    onBlur: TextInputProps['onBlur'];
 };
 
+
+
 const CustomInput = ({ onChange, name, error, onBlur }: CustomInputProps) => {
+    if(name === "password"){
+    console.log({error, type: typeof error})
+}
 
     return(
         <View style={styles.inputContainer}>
@@ -22,9 +27,14 @@ const CustomInput = ({ onChange, name, error, onBlur }: CustomInputProps) => {
             />
 
             {
-                error &&(
-                    <Text style={styles.error}>{error}</Text>
-                )
+                error && typeof error === "string" && <Text style={styles.error}>{error}</Text>
+                
+            }
+            {
+                error && typeof error === "object" && error.map((error, index) => {
+                   return <Text key={index} style={styles.error}>{error}</Text>
+                
+                })
             }
             
             
