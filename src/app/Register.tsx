@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import { useRouter } from "expo-router";
 import CustomInput from '@/components/CustomInput';
 
+
+
 export default function Register (){
      const router = useRouter();
 
@@ -11,11 +13,12 @@ export default function Register (){
     const [surname, setSurname] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-
+    
     useEffect(() =>{
         
     }, [])
 
+ 
     return(
     <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView behavior='padding'>
@@ -23,8 +26,16 @@ export default function Register (){
                 <Text style={styles.formTitle}>Registration Form</Text>
                 <CustomInput name={'Name'} onChange={setName}/>
                 <CustomInput name={'Surname'} onChange={setSurname}/>
-                <CustomInput name={'Email'} onChange={setEmail}/>
-                <CustomInput name={'Password'} onChange={setPassword}/>
+                <CustomInput
+                    name="Email"
+                    onChange={setEmail}
+                   
+                />
+                <CustomInput
+                    name="Password"
+                    onChange={setPassword}
+                    
+                />
                 
                 
                 <Pressable style={styles.button}> 

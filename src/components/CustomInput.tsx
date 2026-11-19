@@ -1,22 +1,32 @@
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, Text, View, TextInput, type TextInputProps } from "react-native";
 import React from "react";
 
 type CustomInputProps = {
     onChange: (text: string) => void;
     name: string;
+    error?: string;
+    onBlur?: TextInputProps['onBlur'];
 };
 
-const CustomInput = ({ onChange, name }: CustomInputProps) => {
+const CustomInput = ({ onChange, name, error, onBlur }: CustomInputProps) => {
 
     return(
         <View style={styles.inputContainer}>
             <Text style={styles.label}>{name}</Text>
             <TextInput
-              style={styles.input}
+              style={[styles.input, error && {borderColor: '#89382C'}]}
               placeholder={name}
               placeholderTextColor={'#717171'}
               onChangeText={(text) =>{onChange(text)}}
+              onBlur={onBlur}
             />
+
+            {
+                error &&(
+                    <Text style={styles.error}>{error}</Text>
+                )
+            }
+            
             
         </View>
     )
@@ -38,6 +48,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         color: '#BDBDBD',
         borderWidth: 0.8,
+    },
+    error: {
+        color: '#89382C',
+        marginVertical: -5
     }
 
 })

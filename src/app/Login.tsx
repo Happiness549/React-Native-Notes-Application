@@ -4,24 +4,75 @@ import { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomInput from "@/components/CustomInput";
 
+type ValidationResult = {
+    valid: boolean;
+    error: string | null;
+};
+
 
 export default function Login (){
     const router = useRouter();
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [errors, setErrors] = useState({
+        email: "",
+        password: "",
+    });
 
     useEffect(() =>{
         
     }, [])
+
+    const handleInput = (stateName: keyof typeof errors, type: string, value: string) => {
+    const result = validateInput(type, value);
+
+        setErrors((prev) => ({
+            ...prev,
+            [stateName]: result.error ?? "",
+        }));
+    };
+
+    const validateInput = (type: string, value: string): ValidationResult => {
+        if (value.trim() === "") {
+            return {
+                valid: false,
+                error: "Input is required",
+            };
+        }
+
+    if (type === "email") {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+            ? { valid: true, error: null }
+            : { valid: false, error: "Please insert a valid email" };
+    }
+
+    if (type === "string") {
+        return /^[A-Za-z]+$/.test(value)
+            ? { valid: true, error: null }
+            : { valid: false, error: "Only alphabets allowed" };
+    }
+
+        return { valid: true, error: null };
+    };
     return(
     <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView behavior='padding'>
              <ScrollView contentContainerStyle={styles.scrollView}>
                 <Text style={styles.formTitle}>Registration Form</Text> 
                 
-                <CustomInput name={'Email'} onChange={setEmail}/>
-                <CustomInput name={'Password'} onChange={setPassword}/>
+                <CustomInput
+                    name="Email"
+                    onChange={setEmail}
+                    onBlur={() => handleInput('email', 'email', email)}
+                    error={errors.email}
+                />
+                <CustomInput
+                    name="Password"
+                    onChange={setPassword}
+                    onBlur={() => handleInput('password', 'string', password)}
+                    error={errors.password}
+                />
                 
                 
                 <Pressable style={styles.button}> 
