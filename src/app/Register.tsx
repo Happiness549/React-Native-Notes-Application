@@ -5,6 +5,7 @@ import { useRouter } from "expo-router";
 import CustomInput from '@/components/CustomInput';
 import { validateInput } from '../../utils/inputValidation';
 import { ValidationResult } from '../../utils/inputValidation';
+import asyncStorage from '@react-native-async-storage/async-storage'
 
 type Errors = {
     firstName?: ValidationResult;
@@ -12,7 +13,6 @@ type Errors = {
     email?: ValidationResult;
     password?: ValidationResult;
 };
-
 
 
 export default function Register (){
@@ -23,9 +23,32 @@ export default function Register (){
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [errors, setErrors] = useState<Errors>({});
+    const [message, setMessage] = useState<string>('');
     useEffect(() =>{
         
     }, [])
+
+    
+    const onHandleSubmit = async() => {
+      try {
+        await asyncStorage.setItem('reg', JSON.stringify({firstName,surname, email, password}));
+        setMessage('Registration successful! You can now login.');
+      } catch (error) {
+        setMessage('Registration failed. Please try again.');
+      }
+      
+
+    }
+
+    const handleOnGetData = async () => {
+        const result = await asyncStorage.getItem('reg');
+
+        if (result !== null) {
+            const data = JSON.parse(result);
+            console.log(data);
+        }
+    };
+
 
     const handleInput = (stateName: keyof Errors, type: string, value: string) => {
     setErrors(prev => ({
@@ -67,9 +90,10 @@ export default function Register (){
                 />
                 
                 
-                <Pressable style={styles.button}> 
+                <Pressable style={styles.button} onPress={onHandleSubmit}> 
                     <Text style={styles.buttonText}>Submit</Text>
                 </Pressable>
+                <Text style={styles.text}>{message}</Text>
 
                  <Pressable  onPress={() => router.push("/Login")} >
                                    <Text style={styles.text}>Don't have an account? </Text>

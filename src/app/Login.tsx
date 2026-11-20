@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomInput from "@/components/CustomInput";
 import { validateInput } from "../../utils/inputValidation";
-
+import asyncStorage from '@react-native-async-storage/async-storage'
 
 
 export default function Login (){
@@ -12,6 +12,7 @@ export default function Login (){
 
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [message, setMessage] = useState<string>('');
     const [errors, setErrors] = useState({
         email: "",
         password: "",
@@ -30,12 +31,32 @@ export default function Login (){
         }));
     };
 
+    const handleLogin = async () => {
+    try {
+        const result = await asyncStorage.getItem('reg');
+
+        if (result !== null) {
+            const user = JSON.parse(result);
+
+            if (email === user.email && password === user.password) {
+                router.replace('/Home');
+            } else {
+                setMessage('Invalid email or password.');
+            }
+        } else {
+            setMessage('No registered user found.');
+        }
+    } catch (error) {
+        setMessage('Something went wrong.');
+    }
+};
+
     
     return(
     <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView behavior='padding'>
              <ScrollView contentContainerStyle={styles.scrollView}>
-                <Text style={styles.formTitle}>Registration Form</Text> 
+                <Text style={styles.formTitle}>Login</Text> 
                 
                 <CustomInput
                     name="Email"
@@ -46,14 +67,16 @@ export default function Login (){
                 <CustomInput
                     name="Password"
                     onChange={setPassword}
-                    onBlur={() => handleInput('password', 'string', password)}
+                    onBlur={() => handleInput('password', 'password', password)}
                     error={errors.password}
                 />
                 
                 
-                <Pressable style={styles.button}> 
+                <Pressable style={styles.button} onPress={handleLogin}> 
                     <Text style={styles.buttonText}>Submit</Text>
                 </Pressable>
+                <Text style={styles.text}>{message}</Text>
+
                 <View style={styles.buttons}>
                     <Pressable  onPress={() => router.push("/Register")} >
                       <Text style={styles.text}>Don't have an account? </Text>

@@ -5,7 +5,7 @@ type CustomInputProps = {
     onChange: (text: string) => void;
     name: string;
     error?: string | string[] | null;
-    onBlur: TextInputProps['onBlur'];
+    onBlur?: TextInputProps['onBlur'];
 };
 
 
