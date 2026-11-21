@@ -62,6 +62,8 @@ export default function Register (){
     <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView behavior='padding'>
              <ScrollView contentContainerStyle={styles.scrollView}>
+               <View style={styles.pinkCircle} />
+               <View style={styles.purpleCircle} />
                 <Text style={styles.formTitle}>Registration Form</Text>
                 <CustomInput name={'Name'} 
                 onChange={setFirstName}
@@ -93,11 +95,11 @@ export default function Register (){
                 <Pressable style={styles.button} onPress={onHandleSubmit}> 
                     <Text style={styles.buttonText}>Submit</Text>
                 </Pressable>
-                <Text style={styles.text}>{message}</Text>
+                <Text>{message}</Text>
 
                  <Pressable  onPress={() => router.push("/Login")} >
-                                   <Text style={styles.text}>Don't have an account? </Text>
-                                   <Text style={styles.texts}>Sign up</Text>  
+                                   <Text >Don't have an account? </Text>
+                                   <Text style={styles.texts}>Login</Text>  
                               </Pressable>
                 <StatusBar/>
 
@@ -116,9 +118,28 @@ export default function Register (){
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#010709",
+    backgroundColor: "#FFF4F7",
     flex: 1,
     paddingHorizontal: 20,  
+  },
+  pinkCircle: {
+    position: 'absolute',
+    width: 290,
+    height: 290,
+    borderRadius: 150,
+    backgroundColor: '#FCE1ED',
+    top: -30,
+    left: -80,
+  },
+
+  purpleCircle: {
+    position: 'absolute',
+    width: 220,
+    height: 220,
+    borderRadius: 120,
+    backgroundColor: '#F0E5FA',
+    top: 125,
+    right: -80,
   },
   scrollView: {
     gap: 15,
@@ -129,7 +150,7 @@ const styles = StyleSheet.create({
   formTitle: {
     fontSize: 36,
     marginVertical: 10,
-    color: '#BDBDBD'
+    color: '#D92E72'
   },
   inputContainer: {
     gap: 5
@@ -137,22 +158,15 @@ const styles = StyleSheet.create({
   label:{
     color: '#BDBDBD'
   },
-  input:{
-    borderRadius: 0.8,
-    borderColor: '#BDBDBD',
-    padding: 5,
-    paddingHorizontal: 10,
-    color: '#BDBDBD',
-    borderWidth: 0.8
-  },
+  
   button: {
-    backgroundColor: '#306A6B',
+    backgroundColor: '#D92E72',
     padding: 15,
     marginTop: 20,
     borderRadius: 5,
   },
   buttonText: {
-    color: '#BDBDBD',
+    color: 'white',
     textAlign: 'center',
     textTransform: 'uppercase'
   },
@@ -160,10 +174,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row'
   },
-  text: {
-    color: '#BDBDBD'
-  },
   texts: {
-    color: '#306A6B'
+    color: '#D92E72'
   }
 });

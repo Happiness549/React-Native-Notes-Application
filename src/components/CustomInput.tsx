@@ -17,7 +17,7 @@ const CustomInput = ({ onChange, name, error, onBlur }: CustomInputProps) => {
 
     return(
         <View style={styles.inputContainer}>
-            <Text style={styles.label}>{name}</Text>
+            <Text>{name}</Text>
             <TextInput
               style={[styles.input, error && {borderColor: '#89382C'}]}
               placeholder={name}
@@ -47,9 +47,6 @@ export default CustomInput
 const styles = StyleSheet.create({
     inputContainer: {
         gap: 5
-    },
-    label: {
-        color: '#BDBDBD'
     },
     input: {
         borderRadius: 5,
